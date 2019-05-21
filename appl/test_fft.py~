@@ -1,0 +1,54 @@
+#####################################################
+#
+#  How to use Fast Fourier Translation liblary.
+#
+#
+#
+#  Written by M.YAGYU, 21 May 2019
+#
+#####################################################
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+# paramters of data
+N=256                       # Sampling number
+dt=0.01                     # sampling width
+f1=10                       # frequencies
+f2=20                       # frequencies
+t=np.arange(0,N*dt,dt)      # time pivot
+freq=np.linspace(0,1./dt,N) # freq. pivot
+
+
+# generating signal
+f=np.sin(2*np.pi*f1*t)+np.sin(2*np.pi*f2*t)+0.3*np.random.randn(N)
+
+# Fast Fourier Translation
+F=np.fft.fft(f)
+
+# Calculating amplitude spectrum
+amp=np.abs(F)
+
+
+# Plot
+plt.figure()
+plt.rcParams['font.family']='Times New Roman'
+plt.rcParams['font.size']='17'
+plt.subplot(121)
+plt.plot(t,f,label='f(n)')
+plt.xlabel("Time",fontsize=20)
+plt.ylabel("Signal",fontsize=20)
+plt.grid()
+leg=plt.legend(loc=1,fontsize=25)
+leg.get_frame().set_alpha(1)
+plt.subplot(122)
+
+plt.plot(freq,amp,label='|F(k)|')
+plt.xlabel("Frequency",fontsize=20)
+plt.ylabel("Amplitude",fontsize=20)
+plt.grid()
+leg=plt.legend(loc=1,fontsize=25)
+leg.get_frame().set_alpha(1)
+plt.show()
+
