@@ -2,6 +2,8 @@
 #
 #  How to use Fast Fourier Translation liblary.
 #
+#  Make time-frequency data and output to file.
+#  read data of file which makes by myself and do FFT.
 #
 #
 #  Written by M.YAGYU, 21 May 2019
@@ -12,6 +14,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
 
 
 # paramters of data
@@ -27,7 +30,7 @@ freq=np.linspace(0,1./delt,N)   # freq. pivot
 
 
 # generating signal
-#f=np.sin(omega1*t)+np.sin(omega2*t)+0.3*np.random.randn(N)
+
 f=np.sqrt(2.)*np.sin(omega1*t)
 
 
@@ -38,8 +41,37 @@ for i in range(1,n,2):
 #end for
 f=f+fn
 
+# Output to file
+fp=open('test_data.dat','w')
+for j in range(int(N)):
+    
+    fp.write(str(t[j]))
+    fp.write('\t')
+    fp.write(str(f[j]))
+    fp.write('\n')
+fp.close()
+
+#fp=open('test_data.dat','r')
+#line=fp.readlines()
+#fp.close()
+#print (line)
+
+# Read file and store data
+data=np.loadtxt("test_data.dat",delimiter='\t',comments='#')
+
+i,j=0,0
+t1=np.zeros(N)
+f1=np.zeros(N)
+for i in range(0,2):
+    for j in range(N):
+        if i == 0:
+            t1[j]=data[j][i]
+        else:
+            f1[j]=data[j][i]
+
+
 # Fast Fourier Translation
-F=np.fft.fft(f)
+F=np.fft.fft(f1)
 
 # Calculating amplitude spectrum
 amp=np.abs(F)
@@ -50,7 +82,7 @@ plt.figure()
 plt.rcParams['font.family']='Times New Roman'
 plt.rcParams['font.size']='17'
 plt.subplot(121)
-plt.plot(t,f,label='f(n)',color="red")
+plt.plot(t1,f1,label='f(n)',color="red")
 plt.xlabel("Time",fontsize=20)
 plt.ylabel("Signal",fontsize=20)
 plt.grid()
