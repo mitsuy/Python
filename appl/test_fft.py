@@ -1,6 +1,6 @@
 #####################################################
 #
-#  How to use Fast Fourier Translation liblary.
+#  How to use Fast Fourier Transformation liblary.
 #
 #  Make time-frequency data and output to file.
 #  read data of file which makes by myself and do FFT.
@@ -13,6 +13,8 @@
 
 
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import sys
 
@@ -31,18 +33,6 @@ def main():
 
     # Generate signal
     f=np.sin(omega1*t)+0.2*np.sin(omega2*t)
-    #f=np.sin(2*np.pi*f1*t)+np.sin(2*np.pi*f2*t)\
-    # +0.3*np.random.randn(N)
-
-
-    '''
-    n=25
-    fn=0.
-    for i in range(1,n,2):
-        fn=(1/i)*np.sqrt(2.)*np.sin(i*omega1*t)+fn
-    #end for
-    f=f+fn
-    '''
     
     # Stored t and f to tmp (as 2D aray)
     tmp=np.c_[t,f]
@@ -66,7 +56,8 @@ def main():
                 f1[j]=data[j][i]
 
     '''
-    # Fast Fourier Translation
+    
+    # Fast Fourier Transformation
     F=np.fft.fft(f1)
 
     # Save data after FFT
@@ -94,6 +85,7 @@ def main():
     plt.grid()
     leg=plt.legend(loc=1,fontsize=25)
     leg.get_frame().set_alpha(1)
+    plt.savefig('fft.png')
     plt.show()
 
 #end main
