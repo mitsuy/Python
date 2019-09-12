@@ -33,7 +33,7 @@ tag_listA=tag_mainbox.select_one(".list-typeA")
 news_tag=tag_listA.findAll("a")
 
 # Open the csv file. if there not, make file
-f=open("main_news.csv","w")
+f=open("main_news.csv","w",encoding="utf_8_sig")
 write_main=csv.writer(f)
 
 # Make array.
@@ -73,7 +73,7 @@ list_date=list_sub.select(".date")
 list=list_sub.select("a")
 #print(list_midashi[0].text)
 
-g=open("flash_news.csv","w")
+g=open("flash_news.csv","w",encoding="utf_8_sig")
 write_sub=csv.writer(g)
 sublist=["# Flash news"]
 
